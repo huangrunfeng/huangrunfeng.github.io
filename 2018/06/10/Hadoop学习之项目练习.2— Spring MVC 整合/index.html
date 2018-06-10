@@ -6,15 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://huangrunfeng.github.io">
-  <title>Archives: 2018/6 | HRF</title>
+  <title>Hadoop学习之项目练习.2 — Spring MVC 整合 | HRF</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HRF">
-<meta property="og:url" content="http://huangrunfeng.github.io/archives/2018/06/index.html">
+  <meta name="description" content="Hadoop学习之SpringMVC整合，记录springMVC整合过程">
+<meta name="keywords" content="Hadoop">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop学习之项目练习.2 — Spring MVC 整合">
+<meta property="og:url" content="http://huangrunfeng.github.io/2018/06/10/Hadoop学习之项目练习.2— Spring MVC 整合/index.html">
 <meta property="og:site_name" content="HRF">
+<meta property="og:description" content="Hadoop学习之SpringMVC整合，记录springMVC整合过程">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-06-10T06:31:20.996Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HRF">
+<meta name="twitter:title" content="Hadoop学习之项目练习.2 — Spring MVC 整合">
+<meta name="twitter:description" content="Hadoop学习之SpringMVC整合，记录springMVC整合过程">
   
     <link rel="alternative" href="/atom.xml" title="HRF" type="application/atom+xml">
   
@@ -150,36 +155,83 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Hadoop学习之项目练习.2— Spring MVC 整合" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/06/10/Hadoop学习之项目练习.2— Spring MVC 整合/" class="archive-article-date">
-  	<time datetime="2018-06-10T05:44:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-10</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/06/10/Hadoop学习之项目练习.2— Spring MVC 整合/">Hadoop学习之项目练习.2 — Spring MVC 整合</a>
+    <h1 class="article-title" itemprop="name">
+      Hadoop学习之项目练习.2 — Spring MVC 整合
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/06/10/Hadoop学习之项目练习.2— Spring MVC 整合/" class="archive-article-date">
+  	<time datetime="2018-06-10T05:44:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <excerpt in="" index="" |="" 首页摘要=""> 
+
+<p>Hadoop学习之SpringMVC整合，记录springMVC整合过程</p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+
+<h2 id="整改工程，使用Spring全注解方式"><a href="#整改工程，使用Spring全注解方式" class="headerlink" title="整改工程，使用Spring全注解方式"></a>整改工程，使用Spring全注解方式</h2><p>创建RootConfig和MyBeans两个类，替换bean.xml配置方式</p>
+<p>RootConfig配置注解扫描路径，作用同bean.xml中的<code>context:component-scan</code>字段<br>  <!-- 组间扫描 --><br>  &lt;context:component-scan base-package=”cn.runfeng.dao.impl,cn.runfeng.service.impl”&gt;&lt;/context:component-scan&gt;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package cn.runfeng.config;</span><br><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">@Component</span><br><span class="line">@ComponentScan(basePackages=&#123;&quot;cn.runfeng.config&quot;,&quot;cn.runfeng.dao.impl&quot;,&quot;cn.runfeng.service.impl&quot;&#125;)</span><br><span class="line">public class RootConfig &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>MyBeans获取数据源、sessionFactory和transactionManager，取代bean.xml中的响应属性配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">package cn.runfeng.config;</span><br><span class="line">import java.beans.PropertyVetoException;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import java.util.Properties;</span><br><span class="line">import javax.sql.DataSource;</span><br><span class="line">import org.hibernate.SessionFactory;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.core.io.ClassPathResource;</span><br><span class="line">import org.springframework.orm.hibernate5.HibernateTransactionManager;</span><br><span class="line">import org.springframework.orm.hibernate5.LocalSessionFactoryBean;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import com.mchange.v2.c3p0.ComboPooledDataSource;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class MyBeans &#123;  </span><br><span class="line">  @Bean(&quot;prop&quot;)</span><br><span class="line">  public Properties getProp()&#123;</span><br><span class="line">    try &#123;</span><br><span class="line">      Properties prop = new Properties();</span><br><span class="line">      ClassPathResource resource = new ClassPathResource(&quot;jdbc.properties&quot;);</span><br><span class="line">      prop.load(resource.getInputStream());</span><br><span class="line">      return prop;</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Bean(&quot;dataSource&quot;)</span><br><span class="line">  public DataSource getDataSource(Properties prop)&#123;</span><br><span class="line">    ComboPooledDataSource ds = null;</span><br><span class="line">    try &#123;</span><br><span class="line">      ds = new ComboPooledDataSource();</span><br><span class="line">      ds.setDriverClass(prop.getProperty(&quot;jdbc.drivercalss&quot;));</span><br><span class="line">      ds.setJdbcUrl(prop.getProperty(&quot;jdbc.url&quot;));</span><br><span class="line">      ds.setUser(prop.getProperty(&quot;jdbc.username&quot;));</span><br><span class="line">      </span><br><span class="line">      ds.setMaxPoolSize(Integer.parseInt(prop.getProperty(&quot;c3p0.pool.size.max&quot;)));</span><br><span class="line">      ds.setMinPoolSize(Integer.parseInt(prop.getProperty(&quot;c3p0.pool.size.min&quot;)));</span><br><span class="line">      ds.setInitialPoolSize(Integer.parseInt(prop.getProperty(&quot;c3p0.pool.size.init&quot;)));</span><br><span class="line">      ds.setAcquireIncrement(Integer.parseInt(prop.getProperty(&quot;c3p0.pool.size.increment&quot;)));</span><br><span class="line">      </span><br><span class="line">    &#125; catch (PropertyVetoException e) &#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    return ds;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Bean(&quot;sessionFactory&quot;)</span><br><span class="line">  public LocalSessionFactoryBean getSessionFactory(DataSource ds,Properties prop)&#123;</span><br><span class="line">    LocalSessionFactoryBean sf = new LocalSessionFactoryBean();</span><br><span class="line">    sf.setDataSource(ds);</span><br><span class="line">    sf.setHibernateProperties(prop);</span><br><span class="line">    sf.setMappingDirectoryLocations(new ClassPathResource(&quot;cn/runfeng/model&quot;));</span><br><span class="line">    return sf;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  @Bean(&quot;transactionManager&quot;)</span><br><span class="line">  public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory)&#123;</span><br><span class="line">    HibernateTransactionManager hbm = new HibernateTransactionManager();</span><br><span class="line">    hbm.setSessionFactory(sessionFactory);</span><br><span class="line">    return hbm;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="创建WebConfig类"><a href="#创建WebConfig类" class="headerlink" title="创建WebConfig类"></a>创建WebConfig类</h2><p>   设置web相关配置，实现视图解析器，处理前端请求，地址映射</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">package cn.runfeng.web;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.ComponentScan;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import org.springframework.web.servlet.ViewResolver;</span><br><span class="line">import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;</span><br><span class="line">import org.springframework.web.servlet.config.annotation.EnableWebMvc;</span><br><span class="line">import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;</span><br><span class="line">import org.springframework.web.servlet.view.InternalResourceViewResolver;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">@EnableWebMvc</span><br><span class="line">@ComponentScan(basePackages=&quot;cn.runfeng.web&quot;)</span><br><span class="line">public class WebConfig extends WebMvcConfigurerAdapter&#123;</span><br><span class="line">  /*</span><br><span class="line">   * 视图解析器</span><br><span class="line">   */</span><br><span class="line">  @Bean</span><br><span class="line">  public ViewResolver viewResolver()&#123;</span><br><span class="line">    InternalResourceViewResolver resolver = new InternalResourceViewResolver(&quot;/pages/&quot;, &quot;.jsp&quot;);</span><br><span class="line">    resolver.setExposeContextBeansAsAttributes(true);</span><br><span class="line">    return resolver;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  @Override</span><br><span class="line">  public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) &#123;</span><br><span class="line">    configurer.enable();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="创建配置分发器类"><a href="#创建配置分发器类" class="headerlink" title="创建配置分发器类"></a>创建配置分发器类</h2><p>  继承<code>AbstractAnnotationConfigDispatcherServletInitializer</code>，初始化springMVC配置</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">package cn.runfeng.web;</span><br><span class="line">import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;</span><br><span class="line"></span><br><span class="line">import cn.runfeng.config.RootConfig;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 配置分发器初始化类</span><br><span class="line"> * @author runfeng</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line">public class ConfDispatcherServerInitializer extends AbstractAnnotationConfigDispatcherServletInitializer &#123;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  protected Class&lt;?&gt;[] getRootConfigClasses() &#123;</span><br><span class="line">    return new Class[]&#123;RootConfig.class&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  protected Class&lt;?&gt;[] getServletConfigClasses() &#123;</span><br><span class="line">    return new Class[]&#123;WebConfig.class&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  protected String[] getServletMappings() &#123;</span><br><span class="line">    return new String[]&#123;&quot;/&quot;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="创建Controller"><a href="#创建Controller" class="headerlink" title="创建Controller"></a>创建Controller</h2><p>   接受前端请求并处理，返回处理结果</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package cn.runfeng.web.controller;</span><br><span class="line"></span><br><span class="line">import org.springframework.stereotype.Controller;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line">import org.springframework.web.bind.annotation.RequestMethod;</span><br><span class="line"></span><br><span class="line">@Controller</span><br><span class="line">public class HomeController &#123;</span><br><span class="line">  </span><br><span class="line">  @RequestMapping(value=&quot;/home&quot;,method=RequestMethod.GET)</span><br><span class="line">  public String home()&#123;</span><br><span class="line">    System.out.println(&quot;i am comming&quot;);</span><br><span class="line">    return &quot;home&quot;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="创建jsp前端页面"><a href="#创建jsp前端页面" class="headerlink" title="创建jsp前端页面"></a>创建jsp前端页面</h2><p>   接收controller的响应</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Home&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  hello, spring MVC + spring + hibernate!</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="配置tomcat服务器"><a href="#配置tomcat服务器" class="headerlink" title="配置tomcat服务器"></a>配置tomcat服务器</h2><pre><code>选中工程右键-&gt;Run On Server
+</code></pre><h2 id="地址栏输入地址测试"><a href="#地址栏输入地址测试" class="headerlink" title="地址栏输入地址测试"></a>地址栏输入地址测试</h2><pre><code>http://localhost:8080/cn.runfeng.HadoopTrain/home 测试成功
+</code></pre><ul>
+<li>注意：工程名要正确，不然无法访问页面，可在工程-&gt;properties-&gt;web project setting中查看</li>
+</ul>
+<h2 id="参考说明："><a href="#参考说明：" class="headerlink" title="参考说明："></a>参考说明：</h2><ul>
+<li>学习过程中，参考诸多帖子教程等，在此感谢，若有不妥，请联系会及时处理~</li>
+</ul>
+</the></excerpt>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -191,19 +243,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://huangrunfeng.github.io/2018/06/10/Hadoop学习之项目练习.2— Spring MVC 整合/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/05/20/Hadoop学习之项目练习.3 — WEB动静资源集群隔离/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hadoop学习之项目练习.3 — WEB动静资源集群隔离</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -226,8 +365,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
