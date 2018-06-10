@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://huangrunfeng.github.io">
-  <title>Category: 大数据 | HRF</title>
+  <title>Hadoop学习之项目练习.4 -- Flume与Kafka整合 | HRF</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="HRF">
-<meta property="og:url" content="http://huangrunfeng.github.io/categories/大数据/index.html">
+  <meta name="description" content="Hadoop学习之项目练习，Flume与Kafka整合学习">
+<meta name="keywords" content="Hadoop、Flume、Kafka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hadoop学习之项目练习.4 -- Flume与Kafka整合">
+<meta property="og:url" content="http://huangrunfeng.github.io/2018/06/10/Hadoop学习之项目练习.4 -- Flume与Kafka整合/index.html">
 <meta property="og:site_name" content="HRF">
+<meta property="og:description" content="Hadoop学习之项目练习，Flume与Kafka整合学习">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="http://huangrunfeng.github.io/2018/06/10/Hadoop学习之项目练习.4%20--%20Flume与Kafka整合/img/kafka_test.png">
+<meta property="og:image" content="http://huangrunfeng.github.io/2018/06/10/Hadoop学习之项目练习.4%20--%20Flume与Kafka整合/img/kafka_flume.png">
+<meta property="og:image" content="http://huangrunfeng.github.io/2018/06/10/Hadoop学习之项目练习.4%20--%20Flume与Kafka整合/img/java_kafka_flume.png">
+<meta property="og:updated_time" content="2018-06-10T10:25:20.065Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HRF">
+<meta name="twitter:title" content="Hadoop学习之项目练习.4 -- Flume与Kafka整合">
+<meta name="twitter:description" content="Hadoop学习之项目练习，Flume与Kafka整合学习">
+<meta name="twitter:image" content="http://huangrunfeng.github.io/2018/06/10/Hadoop学习之项目练习.4%20--%20Flume与Kafka整合/img/kafka_test.png">
   
     <link rel="alternative" href="/atom.xml" title="HRF" type="application/atom+xml">
   
@@ -150,71 +159,276 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-Hadoop学习之项目练习.4 -- Flume与Kafka整合" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/20/Hadoop学习之项目练习.3 -- WEB动静资源集群隔离/" class="archive-article-date">
-  	<time datetime="2018-05-20T15:22:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/20/Hadoop学习之项目练习.3 -- WEB动静资源集群隔离/">Hadoop学习之项目练习.3 — WEB动静资源集群隔离</a>
+    <h1 class="article-title" itemprop="name">
+      Hadoop学习之项目练习.4 -- Flume与Kafka整合
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/06/10/Hadoop学习之项目练习.4 -- Flume与Kafka整合/" class="archive-article-date">
+  	<time datetime="2018-06-10T09:25:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><excerpt in="" index="" |="" 首页摘要=""><br>Hadoop学习之项目练习，Flume与Kafka整合学习</excerpt></p>
+<a id="more"></a>
+<the rest="" of="" contents="" |="" 余下全文="">
+
+<h2 id="Flume安装与测试"><a href="#Flume安装与测试" class="headerlink" title="Flume安装与测试"></a>Flume安装与测试</h2><ul>
+<li><p>下载Flume，下载地址：<br><code>http://www.apache.org/dyn/closer.lua/flume/1.8.0/apache-flume-1.8.0-bin.tar.gz</code></p>
+</li>
+<li><p>解压到home目录下</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-flume-1.8.0-bin.tar.gz </span><br><span class="line">mv apache-flume-1.8.0-bin /home/flume-1.8.0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新增一个配置文件，配合内容如下</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">agent.sources = r1</span><br><span class="line">agent.channels = c1</span><br><span class="line">agent.sinks = s1</span><br><span class="line"># For each one of the sources, the type is defined</span><br><span class="line">agent.sources.r1.type = netcat</span><br><span class="line">agent.sources.r1.bind = localhost</span><br><span class="line">agent.sources.r1.port = 8888</span><br><span class="line"># The channel can be defined as follows.</span><br><span class="line">agent.sources.r1.channels = c1</span><br><span class="line"># Each sink&apos;s type must be defined</span><br><span class="line">agent.sinks.s1.type = file_roll</span><br><span class="line">agent.sinks.s1.sink.directory = /home/logs/test</span><br><span class="line">#Specify the channel the sink should use</span><br><span class="line">agent.sinks.s1.channel = c1</span><br><span class="line"># Each channel&apos;s type is defined.</span><br><span class="line">agent.channels.c1.type = memory</span><br><span class="line"># Other config values specific to each type of channel(sink or source)</span><br><span class="line"># can be defined as well</span><br><span class="line"># In this case, it specifies the capacity of the memory channel</span><br><span class="line">agent.channels.memoryChannel.capacity = 100</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装telnet以便测试</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install xinetd</span><br><span class="line">yum install telnet-server</span><br><span class="line">yum install telnet.x86_64</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>启动Flume，进行测试。<br>  启动Flume：<br>  <code>flume-1.8.0/bin/flume-ng agent --conf conf -f flume-1.8.0/conf/flume-conf.properties -n agent&amp;</code></p>
+<p>  新开个窗口，输入命令，<code>telnet localhost 8888</code>，窗口中输入<code>hellow flume</code></p>
+<p>  进入日志目录查看<code>cat /home/logs/test/1525597960869-45</code>，可看到输入内容，安装成功</p>
+</li>
+<li><p>分发Flume到集群，本例nginx服务器有<code>hadoop100、hadoop101、hadoop102、hadoop103</code>四台机器，所以用这四台建立flume集群</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xysnc /home/flume-1.8.0/</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="Kafka安装与测试"><a href="#Kafka安装与测试" class="headerlink" title="Kafka安装与测试"></a>Kafka安装与测试</h2><ul>
+<li><p>下载Kafka，下载地址：<br><code>https://www.apache.org/dyn/closer.cgi?path=/kafka/1.1.0/kafka_2.11-1.1.0.tgz</code></p>
+</li>
+<li><p>解压到home目录下<code>kafka_2.11</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf kafka_2.11-1.1.0.tgz </span><br><span class="line">mv kafka_2.11-1.1.0 /home/kafka_2.11</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置zookepper，创建log目录<br>  <code>mkdir -p /home/kafka_2.11/zookeeper</code><br>  <code>mkdir -p /home/kafka_2.11/zookeeper/log</code></p>
+<p>  配置<code>[zookeeper.properties]</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># the directory where the snapshot is stored.</span><br><span class="line">dataDir=/home/kafka_2.11/zookeeper</span><br><span class="line">dataLogDir=/home/kafka_2.11/zookeeper/log</span><br><span class="line"># the port at which the clients will connect</span><br><span class="line">clientPort=2181</span><br><span class="line"># disable the per-ip limit on the number of connections since this is a non-production config</span><br><span class="line">maxClientCnxns=100</span><br><span class="line">tickTime=2000</span><br><span class="line">initLimit=10</span><br><span class="line">syncLimit=5</span><br><span class="line">server.1=192.168.1.151:2888:3888</span><br><span class="line">server.2=192.168.1.104:2888:3888</span><br><span class="line">server.3=192.168.1.105:2888:3888</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>设置myid</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在151上：echo &quot;1&quot; &gt;/home/kafka_2.11/zookeeper</span><br><span class="line">在104上：echo &quot;2&quot; &gt;/home/kafka_2.11/zookeeper</span><br><span class="line">在105上：echo &quot;3&quot; &gt;/home/kafka_2.11/zookeeper</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>依次启动151/104的zookeeper</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh bin/zookeeper-server-start.sh config/zookeeper.properties &amp;</span><br></pre></td></tr></table></figure>
+<p>  启动报错：这个报错没关系，后面104还没启动<br>  <code>/192.168.1.104:2888 (org.apache.zookeeper.server.quorum.Learner)
+  java.net.ConnectException: 拒绝连接 (Connection refused)</code></p>
+</li>
+<li><p>配置集群<br>  配置<code>[config/server.properties]</code>，主要修改如下，其他默认（151上为例）</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">broker.id=0 #不能一样，104=1,105=2</span><br><span class="line">listeners=PLAINTEXT://:9092</span><br><span class="line">port=9002</span><br><span class="line">host.name=192.168.1.151</span><br><span class="line">log.dirs=/home/kafka_2.11/zookeeper/log</span><br><span class="line">zookeeper.connect=192.168.1.151:2181,192.168.1.104:2181,192.168.1.105:2181</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动集群，集群每个节点都启动</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-server-start.sh  config/server.properties &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>验证kafka</p>
+<p>  创建<code>topic–test</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-topics.sh --create --zookeeper 192.168.1.151:2181,192.168.1.104:2181 --replication-factor 2 --partitions 2 --topic test</span><br></pre></td></tr></table></figure>
+<p>  列出已创建的topic列表</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-topics.sh --list --zookeeper 192.168.1.151:2181,192.168.1.104:2181</span><br></pre></td></tr></table></figure>
+<p>  模拟客户端去发送消息</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-console-producer.sh --broker-list 192.168.1.151:9092,192.168.1.104:9092 --topic test</span><br></pre></td></tr></table></figure>
+<p>  模拟客户端去接受消息</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-console-consumer.sh --zookeeper 192.168.1.151:2181,192.168.1.104:2181 --from-beginning --topic mytest</span><br></pre></td></tr></table></figure>
+<p>  查看指定的主题</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/kafka-topics.sh --describe --zookeeper localhost:2181 --topic test</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="img/kafka_test.png" alt="kafka_test"></p>
+<h2 id="Flume整合Kafka"><a href="#Flume整合Kafka" class="headerlink" title="Flume整合Kafka"></a>Flume整合Kafka</h2><ul>
+<li><p>在flume的配置文件目录下新增<code>collectLog.properties</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">agent.sources = r1</span><br><span class="line">agent.channels = c1</span><br><span class="line">agent.sinks = k1</span><br><span class="line">#source</span><br><span class="line">agent.sources.r1.type= sqooldir</span><br><span class="line">agent.sources.r1.spoolDir = /home/logs</span><br><span class="line">#sink</span><br><span class="line">agent.sinks.k1.type = org.apache.flume.sink.kafka.KafkaSink</span><br><span class="line">agent.sinks.k1.topic = hadoop</span><br><span class="line">agent.sinks.k1.brokerList = 192.168.1.151:9092,192.168.1.104:9092,192.168.1.105:9092</span><br><span class="line">agent.sinks.k1.requiredAcks = 1</span><br><span class="line">agent.sinks.k1.batchSize = 20</span><br><span class="line">agent.sinks.k1.channel = c1</span><br><span class="line">#channel</span><br><span class="line">agent.channels.c1.type = memory</span><br><span class="line">#bind</span><br><span class="line">agent.sources.r1.channels = c1</span><br><span class="line">agent.sinks.k1.channels = c1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>分发到集群，100，101，102和103上<br>  <code>xsync collectLog.properties</code> </p>
+</li>
+<li><p>启动zk集群，151/104/105</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh bin/zookeeper-server-start.sh config/zookeeper.properties &amp;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>启动kafka集群，并开启消费者查看输入</p>
+<p>  151/104/105上，启动kafka：<br>  <code>./bin/kafka-server-start.sh  config/server.properties &amp;</code></p>
+<p>  104上，启动消费者<br>  <code>./bin/kafka-console-consumer.sh --zookeeper 192.168.1.151:2181,192.168.1.104:2181,192.168.1.105:2181 --from-beginning --topic hadoop &amp;</code></p>
+</li>
+<li><p>启动fluem<br>  <code>./bin/flume-ng agent -f conf/collectLog.properties -n agent</code></p>
+</li>
+</ul>
+<p>验证结果如图：</p>
+<p><img src="img/kafka_flume.png" alt="kafka_flume"></p>
+<h2 id="JAVA创建消费者"><a href="#JAVA创建消费者" class="headerlink" title="JAVA创建消费者"></a>JAVA创建消费者</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class LogCollectConsumer &#123;</span><br><span class="line">	public static void main(String[] args)&#123;</span><br><span class="line">		Properties props = new Properties();</span><br><span class="line">		props.put(&quot;zookeeper.connect&quot;, &quot;hadoop104:2181,hadoop151:2181,hadoop105:2181&quot;);</span><br><span class="line">		props.put(&quot;group.id&quot;, &quot;group1&quot;);</span><br><span class="line">		props.put(&quot;auto.offset.reset&quot;, &quot;smallest&quot;);</span><br><span class="line">		props.put(&quot;zookeeper.session.timeout.ms&quot;, &quot;500&quot;);</span><br><span class="line">		props.put(&quot;zookeeper.sync.timeout.ms&quot;, &quot;250&quot;);</span><br><span class="line">		props.put(&quot;auto.commit.interval.ms&quot;, &quot;1000&quot;);</span><br><span class="line">		</span><br><span class="line">		ConsumerConfig conf = new ConsumerConfig(props);</span><br><span class="line">		ConsumerConnector conn = Consumer.createJavaConsumerConnector(conf);</span><br><span class="line">		System.out.println(&quot;--------------beigin-----------------------------&quot;);</span><br><span class="line">		Map&lt;String, Integer&gt; topicCount = new HashMap&lt;String, Integer&gt;();</span><br><span class="line">		topicCount.put(&quot;hadoop&quot;, 1);</span><br><span class="line">		Map&lt;String, List&lt;KafkaStream&lt;byte[], byte[]&gt;&gt;&gt; map = conn.createMessageStreams(topicCount);</span><br><span class="line">		List&lt;KafkaStream&lt;byte[], byte[]&gt;&gt; list = map.get(&quot;hadoop&quot;);</span><br><span class="line">		for(KafkaStream&lt;byte[], byte[]&gt; stream : list)&#123;</span><br><span class="line">			System.out.println(&quot;----------------for in ----------------------------&quot;);</span><br><span class="line">			ConsumerIterator&lt;byte[], byte[]&gt; it = stream.iterator();</span><br><span class="line">			while(it.hasNext())&#123;</span><br><span class="line">				System.out.println(&quot;--------- while in -----------------------&quot;);</span><br><span class="line">				MessageAndMetadata&lt;byte[], byte[]&gt; entity = it.next();</span><br><span class="line">				String value = new String(entity.message());</span><br><span class="line">				String key = new String(&quot;NULL&quot;);</span><br><span class="line">				if(entity.key() != null)&#123;</span><br><span class="line">					key = new String(entity.key());</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		conn.shutdown();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>生产者生产消息，消费者消费消息处理，eclipse控制台输出消费信息，如图</p>
+<p><img src="img/java_kafka_flume.png" alt="java_kafka_flume"></p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><ul>
+<li><p><code>2 larger than available brokers: 0.</code><br>—— 未启动kafka server：</p>
+</li>
+<li><p><code>java.net.UnknownHostException: 192.168.1.151:2181 192.168.1.104: invalid IPv6 address</code> ——Ip配置错误，中间逗号分割</p>
+</li>
+<li><p>创建主题时，报错，<code>Broker may not be available</code><br>——配置文件中加listeners=PLAINTEXT://:9092 解决</p>
+</li>
+</ul>
+<ul>
+<li><code>This server does not host this topic-partition.</code><br>——虽然有这个错，但验证过了，后续继续观察</li>
+</ul>
+<ul>
+<li><p>Java 创建消费者不消费问题：<br>  <code>Error Path:/consumers/test-consumer-group/ids Error:KeeperErrorCode = NodeExists for /consumers/test-consumer-group/ids</code><br>  1、验证发现，消费者消费过之后，如果没新的生产者生产数据，消费无反应（也就是说不是从早信息消费的，接着上一次继续消费，查资料说有<code>auto.offset.reset=earliest</code>属性配置，但所用版本只能是smallist或者largest）</p>
+<p>  出现这问题，可尝试更换group.id，或者用生产者在生产新的数据来测试数据<br>首先关闭zookeeper/kafka，清理下dataDir下的内容，生产者重新生产数据，再测试看是否有问题</p>
+<p>  2、<code>group.id=test-consumer-group</code>，部分博客说group.id要和consumer的配置文件一致，本例验证并非如此，换个group.id重跑应用，相当于重建个消费者，会从生产者最早生产的数据开始处理</p>
+<p>  3、博客中说zookeeper集群和kafka集群要是奇数，这个问题待验证</p>
+</li>
+</ul>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p>flume安装：<br><code>https://www.mtyun.com/library/how-to-install-flume-on-centos7</code><br>kafka安装：<br><code>https://blog.csdn.net/zxy987872674/article/details/72466504</code></p>
+</the>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Hadoop、Flume、Kafka</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/大数据//" class="article-tag-list-link color4">大数据</a>
-        		</li>
-      		
-		</ul>
-	</div>
+      
 
+      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://huangrunfeng.github.io/2018/06/10/Hadoop学习之项目练习.4 -- Flume与Kafka整合/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/06/10/Hadoop学习之项目练习.5 -- 日志收集处理HDFS与Hive/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hadoop学习之项目练习.5 -- 日志收集处理HDFS与Hive</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -237,10 +451,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
 		root: "/",
