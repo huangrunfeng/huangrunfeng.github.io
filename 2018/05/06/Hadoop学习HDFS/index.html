@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://huangrunfeng.github.io">
-  <title>Hadoop伪分布式式安装 | HRF</title>
+  <title>Hadoop学习HDFS | HRF</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Hadoop伪分布式安装部署过程记录">
-<meta name="keywords" content="Hadoop">
+  <meta name="description" content="Hadoop学习之HDFS记录，HDFS相关知识，后续待持续补充">
+<meta name="keywords" content="Hadoop、HDFS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hadoop伪分布式式安装">
-<meta property="og:url" content="http://huangrunfeng.github.io/2018/05/06/Hadoop伪分布式安装/index.html">
+<meta property="og:title" content="Hadoop学习HDFS">
+<meta property="og:url" content="http://huangrunfeng.github.io/2018/05/06/Hadoop学习HDFS/index.html">
 <meta property="og:site_name" content="HRF">
-<meta property="og:description" content="Hadoop伪分布式安装部署过程记录">
+<meta property="og:description" content="Hadoop学习之HDFS记录，HDFS相关知识，后续待持续补充">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-06-10T07:47:45.543Z">
+<meta property="og:updated_time" content="2018-06-10T09:03:28.320Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hadoop伪分布式式安装">
-<meta name="twitter:description" content="Hadoop伪分布式安装部署过程记录">
+<meta name="twitter:title" content="Hadoop学习HDFS">
+<meta name="twitter:description" content="Hadoop学习之HDFS记录，HDFS相关知识，后续待持续补充">
   
     <link rel="alternative" href="/atom.xml" title="HRF" type="application/atom+xml">
   
@@ -155,138 +155,128 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Hadoop伪分布式安装" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Hadoop学习HDFS" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Hadoop伪分布式式安装
+      Hadoop学习HDFS
     </h1>
   
 
         
-        <a href="/2018/05/06/Hadoop伪分布式安装/" class="archive-article-date">
-  	<time datetime="2018-05-06T13:40:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-06</time>
+        <a href="/2018/05/06/Hadoop学习HDFS/" class="archive-article-date">
+  	<time datetime="2018-05-06T08:29:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-06</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <excerpt in="" index="" |="" 首页摘要="">
-
-<p>Hadoop伪分布式安装部署过程记录</p>
+        <p><excerpt in="" index="" |="" 首页摘要=""><br>Hadoop学习之HDFS记录，HDFS相关知识，后续待持续补充</excerpt></p>
 <a id="more"></a>
 <the rest="" of="" contents="" |="" 余下全文="">
 
-<h2 id="安装配置虚拟机"><a href="#安装配置虚拟机" class="headerlink" title="安装配置虚拟机"></a>安装配置虚拟机</h2><ul>
-<li><p>Vbox创建虚拟机-Centos7 (先装一台，然后复制)</p>
-<p>  网卡：NAT + 桥接网卡</p>
-<p>  用户名：root：root</p>
-<p>  安装模式：compute node +devlepTools</p>
+<h2 id="Hadoop-API常用的类"><a href="#Hadoop-API常用的类" class="headerlink" title="Hadoop API常用的类"></a>Hadoop API常用的类</h2><ul>
+<li><p><code>org.apache.hadoop.conf.Configuration</code><br>  读取配置文件，默认读取<code>core-default.xml</code>，需配置<code>core-site.xml(default.defaultFS)</code></p>
+<p>  <code>Configuration conf = new Configuration(); //类中有静态代码块中设置默认读取配置文件</code></p>
 </li>
-<li><p>设置静态ip，主机虚拟机互ping，虚拟机访问外网</p>
-<p>  NAT网卡 用于访问外网，dhcp获取ip，配置文件在：</p>
-<p>  <code>/etc/sysconfig/network-script/ifcfg-ens0p3</code></p>
-<p>  修改桥接网卡配置，设置为静态获取ip</p>
-<p>  <code>/etc/sysconfig/network-script/ifcfg-ens0p8</code> </p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ONBOOT=yes #开机启动</span><br><span class="line">BOOTPROTO=static #静态IP</span><br><span class="line">IPADDR=192.168.1.151 #本机地址</span><br><span class="line">NETMASK=255.255.255.0 #子网掩码</span><br><span class="line">GATEWAY=192.168.1.1 #默认网关</span><br></pre></td></tr></table></figure>
+<li><p><code>org.apache.hadoop.fs.FileSystem</code>,Hadoop文件系统，分布式文件系统 <code>DistributedFileSystem</code></p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FileSystem fs = FileSystem.get(conf);</span><br><span class="line">fs.open(path);</span><br><span class="line">fs.create(path);</span><br><span class="line">fs.getFileStatus(path);</span><br><span class="line">fs.listStatus(path);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>在<code>/etc/sysconfig/network</code>中配置DNS</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">DNS1=192.168.1.1</span><br><span class="line">DNS2=8.8.8.8</span><br></pre></td></tr></table></figure>
+<li><p><code>org.apache.hadoop.fs.Path</code>，指定文件系统路径</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Path path = new Path(“/test”);</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>重启网络，service network restart，查看ip addr，主机虚拟机互ping，ping外网</p>
-</li>
-<li><p>主机虚拟机共享文件夹：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir /mnt/cdrom</span><br><span class="line">umount /mnt/cdrom</span><br><span class="line">mount /dev/cdrom /mnt/cdrom</span><br><span class="line">cd /mnt/cdrom</span><br><span class="line">ls ./VBoxLinuxAdditions.run  #确定没有failed</span><br><span class="line">sudo mount -t vboxsf share /home/share</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="单机伪分布式安装"><a href="#单机伪分布式安装" class="headerlink" title="单机伪分布式安装"></a>单机伪分布式安装</h2><h3 id="JDK-安装"><a href="#JDK-安装" class="headerlink" title="JDK 安装"></a>JDK 安装</h3><ul>
-<li><p>安装JDK，查看安装版本</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -ivh JDK8.rpm  #安装rpm包</span><br><span class="line">java -version  #查看安装成功后的java版本</span><br></pre></td></tr></table></figure>
+<li><p><code>org.apache.hadoop.fs.FSDataInputStream</code><br>  输入流，读操作</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FSDataInputStream fin = fs.open(path);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
-<li><p>配置环境变量，<code>vi /etc/profile</code></p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/usr/java/jdk1.8.0_151</span><br><span class="line">JRE_HOME=/usr/java/jdk1.8.0_151/jre</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib</span><br><span class="line">export JAVA_HOME JRE_HOME PATH CLASSPATH</span><br></pre></td></tr></table></figure>
+<li><p><code>org.apache.hadoop.fs.FSDataOutputStream;</code><br>  写操作，创建输出流</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FSDataOutputStream fos  = fs.create(path, true);</span><br><span class="line">fos.write(“hello”.getBytes());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>org.apache.hadoop.fs.FileStatus</code></p>
+</li>
+</ul>
+<h2 id="HFDS特点"><a href="#HFDS特点" class="headerlink" title="HFDS特点"></a>HFDS特点</h2><ul>
+<li>数据冗余，硬件备份</li>
+<li>流式的数据访问，写一次，读多次，写过后不方便修改</li>
+<li>存储大文件</li>
+<li>适合批量读写，吞吐量，不适合交互式读写</li>
+<li><p>适合一次写入，多次读取，顺序读写；不支持多用户并发写相同文件</p>
+</li>
+<li><p>读文件：客户端向NameNode发送数据读取请求，NameNode返回元数据（数据在哪些block里），然后客户端读取block里的数据</p>
+</li>
+<li><p>写文件：客户端拆分成block，向NameNode发送请求，NameNode返回可用的DataNodes，客户端写出block到DataNode，然后流水线复制三份，并向NameNode返回元数据，然后客户端开始下一个block写入</p>
+</li>
+</ul>
+<p>##数据分块block为什么是128M</p>
+<ul>
+<li><p>磁盘IO速度约100M/s</p>
+</li>
+<li><p>磁盘寻道时间（10ms）</p>
+</li>
+<li><p>占用数据传输时间的1%</p>
+<p>  因此，10ms /(1/100) *100M/s = 128M</p>
+</li>
+</ul>
+<h2 id="HDFS文件格式"><a href="#HDFS文件格式" class="headerlink" title="HDFS文件格式"></a>HDFS文件格式</h2><ul>
+<li><p>SequenceFile文件格式：Header + record</p>
+<p>  header包含SEQ+版本号+key.class+value.calss+compresstype+codec</p>
+<p>  record = 数据+同步点</p>
+<p>  可设置同步点，方便分割分块 <code>writer.sync()</code></p>
+<p>  Sequence文件的读写</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Writer writer = SequenceFile.createWriter(fs, conf, path, IntWritable.class, Text.class);</span><br><span class="line">writer.append(new IntWritable(1),new Text(“tom1”));</span><br><span class="line">writer.close()</span><br><span class="line">Reader reader = new SequenceFile.Reader(fs , path, conf);</span><br><span class="line">reader.next(key, value);</span><br><span class="line">reader.seek();</span><br><span class="line">reader.getPosition();</span><br><span class="line">reader.sync(position);</span><br><span class="line">reader.close();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MapFile文件格式    </p>
+<p>  MapFile格式是排序的SequenceFile文件，具有索引，按顺序添加</p>
+<p>  格式 index(seq) + data(seq)</p>
+</li>
+<li><p>SetFile</p>
+</li>
+<li><p>ArrayFile</p>
+</li>
+</ul>
+<h2 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h2><ul>
+<li>序列化就是把对象转化成byte[]的过程，以便在网络上传输，反序列化就是把字节流数组转为对象的过程，常用与进程间通信和永久存储</li>
+<li><p>hadoop使用自己的序列化格式，提供<code>Writable</code>接口，里面有<code>write</code>和<code>read</code>两个方法</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface Writable &#123;</span><br><span class="line">	void write(DataOutput out) throws IOException;</span><br><span class="line">	void readFields(DataInput in) throws IOException;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Hadoop的序列话操作的是对象，序列化和反序列化是把流传给对象，有对象操作，和JAVA序列化相反</p>
+<p>  相关类：<code>ByteArrayOutputStream、ObjectOutputStream、DataOutputStream、DataInputStream</code></p>
+<p>  常用的hadoop串行化类 <code>IntWritable、Text、LongWritable</code></p>
+</li>
+<li><p>Java的序列化，有元数据（数据类型）写入，数据量大，数据不是独立的，数据间存在相互引用；hadoop序列化更精简，没有元数据，数据间独立，数据量小，两边都需知道顺序，支持随机读取和排序，但速度并不比Java快</p>
+</li>
+</ul>
+<h2 id="Hadoop主要进程"><a href="#Hadoop主要进程" class="headerlink" title="Hadoop主要进程"></a>Hadoop主要进程</h2><ul>
+<li>NameNode (NN) 元数据服务器 ，用于管理数据存储，元数据包括文件名称、文件目录结构、文件属性、文件对应哪些block，存储在哪些DataNode上</li>
+<li>Secondary NameNode(2ndNN) 辅助NameNode</li>
+<li>DataNode(DN) 用于数据的存储，被NameNode管理，定时向NameNode进行工作汇报，并执行NameNode分配的任务。数据块有三个副本  放在两个机架上  与NameNode心跳连接</li>
+<li>ResourceManager(RM) 资源管理器</li>
+<li>NodeManager(RM) 节点管理器</li>
+</ul>
+<p>2ndNN创建检查点过程<br>NN上执行编辑日志滚动，产生新的编辑日志<br>2NN复制NN的image+edits<br>2nn进行融合<br>2nn将新的image发送给NN<br>NN重命名新image，替换old<br>2NN创建检查点周期<br>一小时执行一次：dfs.namenode.checkpoint.period=3600<br>edit文件超过64M，触发检查点生成<br>fs.checkpoin.size=64m<br>2nn每五分钟检查一次</p>
+<h2 id="HDFS-dfsadmin"><a href="#HDFS-dfsadmin" class="headerlink" title="HDFS dfsadmin"></a>HDFS dfsadmin</h2><ul>
+<li>条件：对目录进行设置、值必须是正值、具有管理员权限</li>
+<li><p>配额管理<br>目录配额:控制目录所有文件、文件夹的个数，1表示空目录，包含子文件</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hdfs dsfadmin -setQuota 4 /test</span><br><span class="line">Hdfs dfsadmin -clrQuota /test</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>空间配额:副本数也计算在内，控制所有文件总大小，值要大于384m,磁盘最小消耗</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hdfs dfsadmin -help setSpaceQuota</span><br><span class="line">Hdfs dfsadmin -setSpaceQuota 20M /test</span><br><span class="line">Hdfs dfsadmin -clrSpaceQuota /test</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <ul>
-<li><p>配置环境，<code>vi /etc/bashrc</code></p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">JAVA_HOME=/usr/java/jdk1.8.0_151</span><br><span class="line">JRE_HOME=/usr/java/jdk1.8.0_151/jre</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</span><br><span class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib</span><br><span class="line">export JAVA_HOME JRE_HOME PATH CLASSPATH</span><br></pre></td></tr></table></figure>
+<li><p>快照：相当于对目录做个备份，并不会立即产生文件，而是指向同一个文件，当写入发生时，才会产生新文件</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Hdfs dsf -help createSnapshot</span><br><span class="line">Hdfs dfsadmin -allowSnapshot /test //默认关闭，允许目录创建快照</span><br><span class="line">Hdfs dsf -createSnapshot /test //创建快照，快照文件和源文件使用相同的数据块</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>回收站：trash，一个文件夹，core-site.xml。程序删除的文件不经过回收站，moveToTrash才行</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Fs.tarsh.interval=0  //默认是禁用回收站，删除文件的存活时间</span><br><span class="line">fs.trash.checkpoint.interval  //检查回收站的间隔时间</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<h3 id="Hadoop安装"><a href="#Hadoop安装" class="headerlink" title="Hadoop安装"></a>Hadoop安装</h3><ul>
-<li><p>解压安装包<br><code>tar -xvzf hadoop-2.8.3.tar.gz</code></p>
-</li>
-<li><p>配置环境变量， <code>vi /etc/profile</code>, 使之生效<code>source /etc/profile</code></p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HADOOP_HOME=/home/hadoop-2.8.3</span><br><span class="line">JAVA_HOME=/usr/java/jdk1.8.0_151</span><br><span class="line">JRE_HOME=/usr/java/jdk1.8.0_151/jre</span><br><span class="line">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin:$HADOOP_HOME/bin</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置Hadoop，主要是<code>core-site.xml、hdfs-site.xml、mapred-site.xml、yarn-site.xml</code>四个xml配置，详细配置如下</p>
-<p>  <code>[core-site.xml]</code></p>
-<pre><code>&lt;configuration&gt;
-      &lt;property&gt;
-        &lt;name&gt;fs.defaultFS&lt;/name&gt;
-        &lt;value&gt;hdfs://localhost&lt;/value&gt;
-      &lt;/property&gt;
-&lt;/configuration&gt;
-</code></pre><p>  <code>[hdfs-site.xml]</code></p>
-<pre><code>&lt;configuration&gt;
-     &lt;property&gt;
-         &lt;name&gt;dfs.replication&lt;/name&gt;
-        &lt;value&gt;1&lt;/value&gt;
-    &lt;/property&gt;
-&lt;/configuration&gt;
-</code></pre><p>  <code>[mapred-site.xml]</code></p>
-<pre><code>&lt;configuration&gt;
-    &lt;property&gt;
-        &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
-        &lt;value&gt;yarn&lt;/value&gt;
-    &lt;/property&gt;
-&lt;/configuration&gt;
-</code></pre><p>  <code>[yarn-site.xml]</code></p>
-<pre><code>&lt;configuration&gt;
-    &lt;property&gt;
-        &lt;name&gt;yarn.resourcemanager.hostname&lt;/name&gt;
-        &lt;value&gt;localhost&lt;/value&gt;
-    &lt;/property&gt;
-    &lt;property&gt;
-        &lt;name&gt;yarn.nodemanager.aux-sivice&lt;/name&gt;
-        &lt;value&gt;mapreduce_shuffle&lt;/value&gt;
-    &lt;/property&gt;
-&lt;/configuration&gt;
-</code></pre></li>
-<li><p>配置ssh安全登录</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -P &apos;&apos; -f ~/.ssh/id_rsa</span><br><span class="line">cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="line">ssh localhost //首次登录，保存</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>格式化hdfs文件系统，首次启动才需要执行</p>
-</li>
-<li>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop namenode -format</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li><p>启动所有进程</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh start-all.sh</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<ul>
-<li>查看进程，执行<code>jps</code>，可看到5个进程：<code>NN/DN/2ndNN/RM/NM</code></li>
-<li>随后便可操作hadoop，如查看文件系统：<code>hadoop fs -ls /</code></li>
-<li>外部网页访问：<a href="http://192.168.1.100:50070/dfshealth.html#tab-overview" target="_blank" rel="noopener">http://192.168.1.100:50070/dfshealth.html#tab-overview</a></li>
-</ul>
-<p>至此Hadoop的伪分布式部署完成，尽情享用吧~</p>
-<h2 id="Linux命令"><a href="#Linux命令" class="headerlink" title="Linux命令"></a>Linux命令</h2><p>在部署过程中，可能会用到如下命令，在此备注下</p>
-<ul>
-<li><p>关闭防火墙 </p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld.service </span><br><span class="line">systemctl disable firewalld.service        #禁止firewall开机启动</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改主机名</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname hadoop100</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</the></excerpt>
+</the>
       
 
       
@@ -320,7 +310,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Hadoop、HDFS</a>
         		</li>
       		
 		</ul>
@@ -376,7 +366,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://huangrunfeng.github.io/2018/05/06/Hadoop伪分布式安装/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://huangrunfeng.github.io/2018/05/06/Hadoop学习HDFS/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -390,18 +380,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/05/06/Hadoop完全分布式安装/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/05/06/Hadoop伪分布式安装/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Hadoop完全分布式安装
+          Hadoop伪分布式式安装
         
       </div>
     </a>
   
   
-    <a href="/2018/05/06/Hadoop学习HDFS/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hadoop学习HDFS</div>
+    <a href="/2018/05/06/Hadoop学习之MapReduce/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Hadoop学习MapReduce</div>
       <i class="icon-circle-right"></i>
     </a>
   
